@@ -276,8 +276,13 @@ void pipeline::maybe_set_center_pose(const centering_state mode, const Pose& val
 {
     if (b.get(f_center | f_held_center))
     {
+#ifdef Q_OS_MAC
+        b.set(f_center, false);
+        b.set(f_held_center, false);
+#else
         set_center(false);
-
+#endif
+        
         if (libs.pFilter)
             libs.pFilter->center();
 
